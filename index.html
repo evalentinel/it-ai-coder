@@ -421,7 +421,7 @@
 
     /* ── HAMBURGER BUTTON ──────────────────────────────── */
     .nav-hamburger {
-      display: none;
+      display: none; /* revealed in media query */
       flex-direction: column; justify-content: center; align-items: center;
       gap: 5px;
       width: 38px; height: 38px;
@@ -429,6 +429,7 @@
       border-radius: 6px; cursor: pointer;
       padding: 0; transition: border-color 0.2s;
       flex-shrink: 0;
+      position: relative; z-index: 201; /* above toast */
     }
     .nav-hamburger:hover { border-color: var(--accent); }
     .nav-hamburger span {
@@ -441,39 +442,55 @@
     .nav-hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-    /* ── TOAST MENU (mobile) ───────────────────────────── */
+    /* ── OVERLAY (always in DOM, shown/hidden via opacity+pointer-events) ── */
+    .nav-overlay {
+      position: fixed; inset: 0; z-index: 190;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .nav-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ── TOAST MENU (always in DOM, animated via transform+opacity) ──────── */
     .nav-toast {
-      display: none;
       position: fixed;
-      bottom: 1.2rem; left: 50%;
-      transform: translateX(-50%) translateY(120%);
+      bottom: 1.4rem; left: 50%;
+      transform: translateX(-50%) translateY(calc(100% + 2rem));
       z-index: 200;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 0.6rem 0.5rem;
-      box-shadow: 0 8px 48px rgba(0,0,0,0.25), 0 0 0 1px var(--border);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      min-width: 220px;
-      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+      border-radius: 18px;
+      padding: 0.5rem;
+      box-shadow: 0 12px 60px rgba(0,0,0,0.3), 0 0 0 1px var(--border);
+      min-width: 230px;
       opacity: 0;
+      pointer-events: none;
+      transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1),
+                  opacity   0.28s ease;
+      /* no display:none — transitions need element always rendered */
     }
     .nav-toast.open {
       transform: translateX(-50%) translateY(0);
       opacity: 1;
+      pointer-events: auto;
     }
     .nav-toast ul {
       list-style: none;
       display: flex; flex-direction: column; gap: 0.1rem;
     }
     .nav-toast ul li a {
-      display: flex; align-items: center; gap: 0.7rem;
-      padding: 0.8rem 1.2rem;
-      border-radius: 10px;
+      display: flex; align-items: center; gap: 0.8rem;
+      padding: 0.85rem 1.3rem;
+      border-radius: 12px;
       font-family: 'Syne', sans-serif;
-      font-weight: 700; font-size: 0.95rem;
-      letter-spacing: 0.04em; text-transform: uppercase;
+      font-weight: 700; font-size: 1rem;
+      letter-spacing: 0.03em; text-transform: uppercase;
       text-decoration: none; color: var(--text);
       transition: background 0.15s, color 0.15s;
     }
@@ -483,29 +500,18 @@
       color: var(--accent);
     }
     .nav-toast ul li a .t-icon {
-      font-size: 1rem; width: 20px; text-align: center;
-      color: var(--accent); opacity: 0.8;
+      font-size: 0.95rem; width: 20px; text-align: center;
+      color: var(--accent);
     }
     .nav-toast-divider {
-      height: 1px; background: var(--border); margin: 0.3rem 1rem;
+      height: 1px; background: var(--border); margin: 0.25rem 1rem;
     }
-
-    /* Overlay backdrop */
-    .nav-overlay {
-      display: none;
-      position: fixed; inset: 0; z-index: 190;
-      background: rgba(0,0,0,0.3);
-      backdrop-filter: blur(2px);
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .nav-overlay.open { opacity: 1; }
 
     /* ── RESPONSIVE ────────────────────────────────────── */
     @media (max-width: 700px) {
       .nav-links     { display: none; }
       .nav-hamburger { display: flex; }
-      .nav-toast     { display: block; }
-      .nav-overlay   { display: block; }
+      /* toast & overlay: always rendered, toggled via .open class — no display change needed */
       .vibe-inner    { grid-template-columns: 1fr; gap: 2rem; }
       .contact-box   { flex-direction: column; }
       section        { padding: 3.5rem 0; }
