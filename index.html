@@ -79,7 +79,7 @@
     .wrapper { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
 
     /* ── NAV ───────────────────────────────────────────── */
-    nav {
+    .main-nav {
       position: sticky; top: 0; z-index: 100;
       backdrop-filter: blur(20px) saturate(1.5);
       -webkit-backdrop-filter: blur(20px) saturate(1.5);
@@ -90,7 +90,7 @@
     }
 
     @media (prefers-color-scheme: dark) {
-      nav { background: rgba(6,8,15,0.75); }
+      .main-nav { background: rgba(6,8,15,0.75); }
     }
 
     .nav-inner {
@@ -538,7 +538,7 @@
   <div class="grid-bg"></div>
 
   <!-- NAV -->
-  <nav>
+  <nav class="main-nav">
     <div class="nav-inner">
       <a class="nav-brand" href="#">
         <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
