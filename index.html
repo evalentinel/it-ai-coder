@@ -419,16 +419,110 @@
     }
     footer span { color: var(--accent); }
 
+    /* ── HAMBURGER BUTTON ──────────────────────────────── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column; justify-content: center; align-items: center;
+      gap: 5px;
+      width: 38px; height: 38px;
+      background: none; border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer;
+      padding: 0; transition: border-color 0.2s;
+      flex-shrink: 0;
+    }
+    .nav-hamburger:hover { border-color: var(--accent); }
+    .nav-hamburger span {
+      display: block; width: 18px; height: 1.5px;
+      background: var(--text);
+      transition: transform 0.3s, opacity 0.3s, width 0.3s;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── TOAST MENU (mobile) ───────────────────────────── */
+    .nav-toast {
+      display: none;
+      position: fixed;
+      bottom: 1.2rem; left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 200;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 0.6rem 0.5rem;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.25), 0 0 0 1px var(--border);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      min-width: 220px;
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+      opacity: 0;
+    }
+    .nav-toast.open {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    .nav-toast ul {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 0.1rem;
+    }
+    .nav-toast ul li a {
+      display: flex; align-items: center; gap: 0.7rem;
+      padding: 0.8rem 1.2rem;
+      border-radius: 10px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 0.95rem;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      text-decoration: none; color: var(--text);
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-toast ul li a:hover,
+    .nav-toast ul li a:active {
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+    .nav-toast ul li a .t-icon {
+      font-size: 1rem; width: 20px; text-align: center;
+      color: var(--accent); opacity: 0.8;
+    }
+    .nav-toast-divider {
+      height: 1px; background: var(--border); margin: 0.3rem 1rem;
+    }
+
+    /* Overlay backdrop */
+    .nav-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 190;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(2px);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .nav-overlay.open { opacity: 1; }
+
     /* ── RESPONSIVE ────────────────────────────────────── */
     @media (max-width: 700px) {
-      .nav-links { display: none; }
-      .vibe-inner { grid-template-columns: 1fr; gap: 2rem; }
-      .contact-box { flex-direction: column; }
+      .nav-links     { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-toast     { display: block; }
+      .nav-overlay   { display: block; }
+      .vibe-inner    { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-box   { flex-direction: column; }
+      section        { padding: 3.5rem 0; }
+      .vibe-section  { padding: 3.5rem 0; }
     }
 
     @media (max-width: 480px) {
-      .hero h1 { font-size: 2.4rem; }
-      .models-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero          { padding: 3rem 1.2rem 2.5rem; min-height: calc(100svh - 58px); }
+      .hero h1       { font-size: clamp(2.2rem, 11vw, 3rem); }
+      .hero-sub      { font-size: 0.82rem; }
+      .logo-svg      { width: 90px; height: 90px; }
+      .models-grid   { grid-template-columns: repeat(2, 1fr); }
+      .build-grid    { grid-template-columns: 1fr; }
+      .tags-wrap     { gap: 0.45rem; }
+      .contact-box   { padding: 1.6rem; }
+      .section-title { font-size: clamp(1.4rem, 6vw, 2rem); }
+      .wrapper       { padding: 0 1rem; }
     }
 
     /* ── STAGGER REVEAL ────────────────────────────────── */
@@ -465,7 +559,22 @@
         <li><a href="#stack">Stack</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </nav>
+
+  <!-- TOAST MENU (mobile) -->
+  <div class="nav-overlay" id="nav-overlay"></div>
+  <nav class="nav-toast" id="nav-toast" role="dialog" aria-label="Navigation menu">
+    <ul>
+      <li><a href="#models"  class="toast-link"><span class="t-icon">◆</span> Models</a></li>
+      <li><a href="#build"   class="toast-link"><span class="t-icon">▲</span> Projects</a></li>
+      <div class="nav-toast-divider"></div>
+      <li><a href="#stack"   class="toast-link"><span class="t-icon">⬡</span> Stack</a></li>
+      <li><a href="#contact" class="toast-link"><span class="t-icon">❖</span> Contact</a></li>
+    </ul>
   </nav>
 
   <!-- HERO -->
@@ -739,8 +848,9 @@
     <p>© 2025 <span>IT AI Coder</span> — built with vibe coding &amp; multiple AI models</p>
   </footer>
 
-  <!-- Scroll reveal -->
+  <!-- Scroll reveal + Mobile toast menu -->
   <script>
+    // ── Scroll reveal ──────────────────────────────────────
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
@@ -753,6 +863,43 @@
     document.querySelectorAll('.reveal').forEach((el, i) => {
       el.dataset.delay = (i % 4) * 80;
       observer.observe(el);
+    });
+
+    // ── Toast menu ─────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const toast     = document.getElementById('nav-toast');
+    const overlay   = document.getElementById('nav-overlay');
+
+    function openMenu() {
+      hamburger.classList.add('open');
+      toast.classList.add('open');
+      overlay.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      toast.classList.remove('open');
+      overlay.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.contains('open') ? closeMenu() : openMenu();
+    });
+
+    overlay.addEventListener('click', closeMenu);
+
+    // Close on link click + smooth scroll
+    document.querySelectorAll('.toast-link').forEach(link => {
+      link.addEventListener('click', () => closeMenu());
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMenu();
     });
   </script>
 </body>
