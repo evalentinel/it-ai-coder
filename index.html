@@ -4,67 +4,60 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IT AI Coder</title>
-  <meta name="description" content="Application developer using vibe coding with multiple AI intelligence models." />
+  <meta name="description" content="Application developer using vibe coding with multiple AI models." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
-    /* ── CSS Variables ─────────────────────────────────── */
+    /* ── Theme tokens ───────────────────────────────────── */
     :root {
-      --bg:         #f4f0e8;
-      --bg2:        #eae5d8;
-      --surface:    #ffffff;
-      --border:     #d0c9b8;
-      --text:       #0d1b2a;
-      --text-muted: #5a6475;
-      --accent:     #00bcd4;
-      --accent2:    #ff5722;
-      --accent-glow: rgba(0,188,212,0.25);
-      --mono-bg:    #0d1b2a;
-      --mono-text:  #a8f0ff;
-      --card-hover: rgba(0,188,212,0.06);
+      --bg:          #f4f0e8;
+      --bg2:         #eae5d8;
+      --surface:     #ffffff;
+      --border:      #d0c9b8;
+      --text:        #0d1b2a;
+      --text-muted:  #5a6475;
+      --accent:      #00bcd4;
+      --accent2:     #ff5722;
+      --accent-glow: rgba(0,188,212,0.22);
+      --mono-bg:     #0d1b2a;
+      --mono-text:   #a8f0ff;
+    }
+    [data-theme="dark"] {
+      --bg:          #06080f;
+      --bg2:         #0c0f1a;
+      --surface:     #111520;
+      --border:      #1e2535;
+      --text:        #e8edf5;
+      --text-muted:  #6b7a94;
+      --accent:      #00e5ff;
+      --accent2:     #ff6b35;
+      --accent-glow: rgba(0,229,255,0.18);
+      --mono-bg:     #0d1420;
+      --mono-text:   #7ef0ff;
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg:         #06080f;
-        --bg2:        #0c0f1a;
-        --surface:    #111520;
-        --border:     #1e2535;
-        --text:       #e8edf5;
-        --text-muted: #6b7a94;
-        --accent:     #00e5ff;
-        --accent2:    #ff6b35;
-        --accent-glow: rgba(0,229,255,0.18);
-        --mono-bg:    #0d1420;
-        --mono-text:  #7ef0ff;
-        --card-hover: rgba(0,229,255,0.04);
-      }
-    }
-
-    /* ── Reset ─────────────────────────────────────────── */
+    /* ── Reset ──────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Syne', sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
-      transition: background 0.3s, color 0.3s;
+      transition: background 0.35s, color 0.35s;
     }
 
-    /* ── Noise overlay ─────────────────────────────────── */
+    /* ── Noise overlay ──────────────────────────────────── */
     body::before {
       content: '';
-      position: fixed; inset: 0;
+      position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.35;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 0; opacity: 0.4;
     }
 
-    /* ── Grid bg ───────────────────────────────────────── */
+    /* ── Grid bg ────────────────────────────────────────── */
     .grid-bg {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background-image:
@@ -73,127 +66,191 @@
       background-size: 48px 48px;
       opacity: 0.35;
       mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 80%);
+      transition: opacity 0.35s;
     }
 
-    /* ── Layout ────────────────────────────────────────── */
+    /* ── Layout ─────────────────────────────────────────── */
     .wrapper { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
 
-    /* ── NAV ───────────────────────────────────────────── */
+    /* ══ NAV ════════════════════════════════════════════ */
     .main-nav {
       position: sticky; top: 0; z-index: 100;
       backdrop-filter: blur(20px) saturate(1.5);
       -webkit-backdrop-filter: blur(20px) saturate(1.5);
-      background: rgba(var(--bg-rgb, 244,240,232), 0.75);
+      background: rgba(244,240,232,0.82);
       border-bottom: 1px solid var(--border);
-      padding: 0.9rem 0;
-      transition: background 0.3s;
+      padding: 0.75rem 0;
+      transition: background 0.35s, border-color 0.35s;
     }
-
-    @media (prefers-color-scheme: dark) {
-      .main-nav { background: rgba(6,8,15,0.75); }
-    }
+    [data-theme="dark"] .main-nav { background: rgba(6,8,15,0.82); }
 
     .nav-inner {
       max-width: 960px; margin: 0 auto; padding: 0 1.5rem;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
     }
 
     .nav-brand {
       display: flex; align-items: center; gap: 0.6rem;
-      font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em;
-      text-decoration: none; color: var(--text);
+      font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em;
+      text-decoration: none; color: var(--text); flex-shrink: 0;
     }
-
     .nav-brand .dot { color: var(--accent); }
 
-    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; }
     .nav-links a {
       text-decoration: none; color: var(--text-muted);
-      font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--accent); }
 
-    /* ── HERO ──────────────────────────────────────────── */
+    /* Controls */
+    .nav-controls { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+
+    .lang-switcher {
+      display: flex; align-items: center;
+      border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.05em;
+    }
+    .lang-switcher button {
+      background: none; border: none; cursor: pointer;
+      padding: 0.32rem 0.52rem; color: var(--text-muted);
+      transition: background 0.15s, color 0.15s;
+      border-right: 1px solid var(--border); line-height: 1;
+    }
+    .lang-switcher button:last-child { border-right: none; }
+    .lang-switcher button:hover  { background: var(--accent-glow); color: var(--accent); }
+    .lang-switcher button.active { background: var(--accent-glow); color: var(--accent); font-weight: 700; }
+
+    .theme-toggle {
+      display: flex; align-items: center;
+      border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+    }
+    .theme-toggle button {
+      background: none; border: none; cursor: pointer;
+      padding: 0.3rem 0.52rem; font-size: 0.82rem; line-height: 1;
+      color: var(--text-muted);
+      transition: background 0.15s, color 0.15s;
+      border-right: 1px solid var(--border);
+    }
+    .theme-toggle button:last-child { border-right: none; }
+    .theme-toggle button:hover  { background: var(--accent-glow); color: var(--accent); }
+    .theme-toggle button.active { background: var(--accent-glow); color: var(--accent); }
+
+    /* ── Hamburger ──────────────────────────────────────── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+      width: 36px; height: 36px;
+      background: none; border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer; padding: 0;
+      transition: border-color 0.2s; flex-shrink: 0;
+    }
+    .nav-hamburger:hover { border-color: var(--accent); }
+    .nav-hamburger span {
+      display: block; width: 16px; height: 1.5px; background: var(--text);
+      transition: transform 0.3s, opacity 0.3s, width 0.3s; transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ══ OVERLAY ════════════════════════════════════════ */
+    .nav-overlay {
+      position: fixed; inset: 0; z-index: 190;
+      background: rgba(0,0,0,0.38);
+      backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .nav-overlay.open { opacity: 1; pointer-events: auto; }
+
+    /* ══ TOAST MENU — never display:none ════════════════ */
+    .nav-toast {
+      position: fixed;
+      top: 58px; right: 1.5rem;
+      transform: translateY(-8px) scale(0.97);
+      transform-origin: top right;
+      z-index: 200;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 0.5rem 0.4rem 0.6rem;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.22);
+      min-width: 230px;
+      opacity: 0; pointer-events: none;
+      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), opacity 0.2s ease;
+    }
+    .nav-toast.open {
+      transform: translateY(0) scale(1);
+      opacity: 1; pointer-events: auto;
+    }
+    .toast-links { list-style: none; display: flex; flex-direction: column; }
+    .toast-links li a {
+      display: flex; align-items: center; gap: 0.8rem;
+      padding: 0.82rem 1.2rem; border-radius: 12px;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 0.95rem; letter-spacing: 0.03em; text-transform: uppercase;
+      text-decoration: none; color: var(--text);
+      transition: background 0.15s, color 0.15s;
+    }
+    .toast-links li a:active,
+    .toast-links li a:hover { background: var(--accent-glow); color: var(--accent); }
+    .t-icon { font-size: 0.88rem; width: 18px; text-align: center; color: var(--accent); }
+    .toast-sep { height: 1px; background: var(--border); margin: 0.3rem 1rem; }
+    .toast-controls {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.55rem 0.8rem 0;
+    }
+    .toast-controls .lang-switcher,
+    .toast-controls .theme-toggle { flex: 1; }
+    .toast-controls .lang-switcher button,
+    .toast-controls .theme-toggle button { flex: 1; text-align: center; padding: 0.38rem 0; }
+
+    /* ══ HERO ══════════════════════════════════════════ */
     .hero {
       min-height: calc(100vh - 58px);
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      text-align: center;
-      padding: 5rem 1.5rem 4rem;
-      gap: 0;
+      text-align: center; padding: 5rem 1.5rem 4rem;
     }
-
-    /* Logo */
-    .logo-wrap {
-      margin-bottom: 2.5rem;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-10px); }
-    }
-
+    .logo-wrap { margin-bottom: 2.5rem; animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
     .logo-svg { width: 120px; height: 120px; display: block; }
-
-    /* Pulse ring */
-    .logo-ring {
-      position: relative; display: inline-block;
-    }
+    .logo-ring { position: relative; display: inline-block; }
     .logo-ring::before, .logo-ring::after {
-      content: '';
-      position: absolute; inset: -12px;
-      border-radius: 50%;
-      border: 1px solid var(--accent);
-      opacity: 0;
+      content: ''; position: absolute; inset: -12px; border-radius: 50%;
+      border: 1px solid var(--accent); opacity: 0;
       animation: pulse-ring 3s ease-out infinite;
     }
     .logo-ring::after { animation-delay: 1.5s; }
+    @keyframes pulse-ring { 0%{transform:scale(0.85);opacity:0.6} 100%{transform:scale(1.3);opacity:0} }
 
-    @keyframes pulse-ring {
-      0%   { transform: scale(0.85); opacity: 0.6; }
-      100% { transform: scale(1.3);  opacity: 0; }
-    }
-
-    /* Eyebrow */
     .eyebrow {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
       color: var(--accent); margin-bottom: 1rem;
       opacity: 0; animation: fade-up 0.6s 0.3s forwards;
     }
-
-    /* Headline */
     .hero h1 {
-      font-size: clamp(2.8rem, 7vw, 5.2rem);
-      font-weight: 800; line-height: 1.05;
-      letter-spacing: -0.03em;
-      color: var(--text);
+      font-size: clamp(2.8rem, 7vw, 5.2rem); font-weight: 800;
+      line-height: 1.05; letter-spacing: -0.03em; color: var(--text);
       opacity: 0; animation: fade-up 0.7s 0.5s forwards;
     }
-
-    .hero h1 .accent { color: var(--accent); }
-    .hero h1 .accent2 { color: var(--accent2); }
-
-    /* Sub */
+    .hero h1 .ac1 { color: var(--accent); }
+    .hero h1 .ac2 { color: var(--accent2); }
     .hero-sub {
       margin-top: 1.4rem;
       font-family: 'JetBrains Mono', monospace;
-      font-size: clamp(0.85rem, 2vw, 1rem);
-      color: var(--text-muted);
-      max-width: 540px;
-      line-height: 1.7;
+      font-size: clamp(0.82rem, 2vw, 1rem); color: var(--text-muted);
+      max-width: 540px; line-height: 1.7;
       opacity: 0; animation: fade-up 0.7s 0.7s forwards;
     }
-
-    /* CTA */
     .hero-cta {
-      margin-top: 2.8rem;
-      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      margin-top: 2.8rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
       opacity: 0; animation: fade-up 0.7s 0.9s forwards;
     }
-
     .btn {
       padding: 0.75rem 1.8rem; border-radius: 4px;
       font-family: 'Syne', sans-serif; font-weight: 700;
@@ -201,29 +258,13 @@
       text-decoration: none; cursor: pointer; border: none;
       transition: transform 0.2s, box-shadow 0.2s;
     }
+    .btn-primary { background: var(--accent); color: #000; box-shadow: 0 0 24px var(--accent-glow); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 32px var(--accent-glow); }
+    .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 
-    .btn-primary {
-      background: var(--accent); color: #000;
-      box-shadow: 0 0 24px var(--accent-glow);
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 32px var(--accent-glow);
-    }
-
-    .btn-ghost {
-      background: transparent; color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-ghost:hover {
-      border-color: var(--accent); color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    /* Scroll cue */
     .scroll-cue {
-      margin-top: 4rem;
-      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      margin-top: 4rem; display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
       color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
       font-family: 'JetBrains Mono', monospace;
       animation: fade-up 1s 1.2s forwards; opacity: 0;
@@ -232,17 +273,10 @@
       width: 1px; height: 40px; background: linear-gradient(to bottom, var(--accent), transparent);
       animation: scroll-pulse 2s ease-in-out infinite;
     }
-    @keyframes scroll-pulse {
-      0%, 100% { opacity: 0.4; transform: scaleY(0.8); }
-      50%       { opacity: 1;   transform: scaleY(1); }
-    }
+    @keyframes scroll-pulse { 0%,100%{opacity:0.4;transform:scaleY(0.8)} 50%{opacity:1;transform:scaleY(1)} }
+    @keyframes fade-up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
-    @keyframes fade-up {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── SECTION base ──────────────────────────────────── */
+    /* ══ SECTIONS ══════════════════════════════════════ */
     section { padding: 5rem 0; }
     .section-label {
       font-family: 'JetBrains Mono', monospace;
@@ -250,663 +284,549 @@
       color: var(--accent); margin-bottom: 0.8rem;
     }
     .section-title {
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 800; letter-spacing: -0.025em;
-      color: var(--text); margin-bottom: 1rem;
+      font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800;
+      letter-spacing: -0.025em; color: var(--text); margin-bottom: 1rem;
     }
-    .section-desc {
-      color: var(--text-muted); font-size: 1rem; line-height: 1.7;
-      max-width: 560px;
-    }
-
-    /* ── DIVIDER ───────────────────────────────────────── */
+    .section-desc { color: var(--text-muted); font-size: 1rem; line-height: 1.7; max-width: 560px; }
     .divider {
       width: 100%; height: 1px;
       background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
     }
 
-    /* ── AI MODELS SECTION ─────────────────────────────── */
-    .models-grid {
-      margin-top: 3rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 1rem;
-    }
-
+    /* Models */
+    .models-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
     .model-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.4rem 1.2rem;
-      display: flex; flex-direction: column; gap: 0.6rem;
-      transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s;
-      cursor: default;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.4rem 1.2rem; display: flex; flex-direction: column; gap: 0.6rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; cursor: default;
     }
-    .model-card:hover {
-      border-color: var(--accent);
-      background: var(--card-hover);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 32px var(--accent-glow);
-    }
+    .model-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 32px var(--accent-glow); }
+    .model-icon { font-size: 1.6rem; line-height: 1; }
+    .model-name { font-weight: 700; font-size: 0.95rem; color: var(--text); }
+    .model-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--accent); background: var(--accent-glow); padding: 0.2rem 0.5rem; border-radius: 3px; width: fit-content; }
+    .model-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
 
-    .model-icon {
-      font-size: 1.6rem; line-height: 1;
-    }
-    .model-name {
-      font-weight: 700; font-size: 0.95rem; color: var(--text);
-    }
-    .model-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem; color: var(--accent);
-      background: var(--accent-glow);
-      padding: 0.2rem 0.5rem; border-radius: 3px;
-      width: fit-content;
-    }
-    .model-desc {
-      font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;
-    }
-
-    /* ── WHAT I BUILD ──────────────────────────────────── */
-    .build-grid {
-      margin-top: 3rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.2rem;
-    }
-
+    /* Build */
+    .build-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
     .build-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.6rem;
-      position: relative; overflow: hidden;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.6rem; position: relative; overflow: hidden;
       transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
     }
     .build-item::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
       background: linear-gradient(90deg, var(--accent), var(--accent2));
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 0.3s;
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
     }
     .build-item:hover { transform: translateY(-3px); box-shadow: 0 8px 32px var(--accent-glow); border-color: var(--accent); }
     .build-item:hover::before { transform: scaleX(1); }
-
-    .build-number {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.1em;
-      margin-bottom: 0.8rem;
-    }
+    .build-number { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 0.8rem; }
     .build-title { font-weight: 700; font-size: 1.05rem; color: var(--text); margin-bottom: 0.4rem; }
     .build-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.6; }
 
-    /* ── VIBE CODING ───────────────────────────────────── */
-    .vibe-section { background: var(--bg2); padding: 5rem 0; }
-    .vibe-inner {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
-      align-items: center;
-    }
-    .vibe-terminal {
-      background: var(--mono-bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 16px 64px rgba(0,0,0,0.3);
-    }
-    .term-bar {
-      background: rgba(255,255,255,0.04);
-      padding: 0.6rem 1rem;
-      display: flex; align-items: center; gap: 0.4rem;
-      border-bottom: 1px solid var(--border);
-    }
+    /* Vibe */
+    .vibe-section { background: var(--bg2); padding: 5rem 0; transition: background 0.35s; }
+    .vibe-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .vibe-terminal { background: var(--mono-bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; box-shadow: 0 16px 64px rgba(0,0,0,0.3); }
+    .term-bar { background: rgba(255,255,255,0.04); padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.4rem; border-bottom: 1px solid var(--border); }
     .term-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .term-dot.r { background: #ff5f57; }
-    .term-dot.y { background: #febc2e; }
-    .term-dot.g { background: #28c840; }
-    .term-body {
-      padding: 1.2rem 1.4rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem; line-height: 1.9;
-      color: var(--mono-text);
-    }
+    .term-dot.r{background:#ff5f57} .term-dot.y{background:#febc2e} .term-dot.g{background:#28c840}
+    .term-body { padding: 1.2rem 1.4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.9; color: var(--mono-text); }
     .term-line { display: flex; gap: 0.5rem; }
     .term-prompt { color: var(--accent); opacity: 0.7; }
     .term-cmd { color: #e8edf5; }
     .term-out { color: #6b7a94; margin-left: 1.1rem; }
-    .term-highlight { color: var(--accent2); }
-    .cursor {
-      display: inline-block; width: 7px; height: 1em;
-      background: var(--accent); vertical-align: text-bottom;
-      animation: blink 1.1s step-end infinite;
-    }
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .term-hi { color: var(--accent2); }
+    .cursor { display: inline-block; width: 7px; height: 1em; background: var(--accent); vertical-align: text-bottom; animation: blink 1.1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-    /* ── STACK TAGS ────────────────────────────────────── */
-    .tags-wrap {
-      margin-top: 3rem;
-      display: flex; flex-wrap: wrap; gap: 0.6rem;
-    }
+    /* Tags */
+    .tags-wrap { margin-top: 3rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
     .tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem; padding: 0.35rem 0.8rem;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+      padding: 0.35rem 0.8rem; border-radius: 4px;
+      border: 1px solid var(--border); color: var(--text-muted);
       transition: border-color 0.2s, color 0.2s, background 0.2s;
     }
     .tag:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
 
-    /* ── CONTACT ───────────────────────────────────────── */
+    /* Contact */
     .contact-box {
-      margin-top: 3rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 1.5rem; flex-wrap: wrap;
+      margin-top: 3rem; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 2.5rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
     }
     .contact-box h3 { font-size: 1.3rem; font-weight: 700; }
-    .contact-box p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.3rem; }
+    .contact-box p  { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.3rem; }
 
-    /* ── FOOTER ────────────────────────────────────────── */
-    footer {
-      padding: 2rem 0;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.08em;
-    }
+    /* Footer */
+    footer { padding: 2rem 0; border-top: 1px solid var(--border); text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.08em; }
     footer span { color: var(--accent); }
 
-    /* ── HAMBURGER BUTTON ──────────────────────────────── */
-    .nav-hamburger {
-      display: none; /* revealed in media query */
-      flex-direction: column; justify-content: center; align-items: center;
-      gap: 5px;
-      width: 38px; height: 38px;
-      background: none; border: 1px solid var(--border);
-      border-radius: 6px; cursor: pointer;
-      padding: 0; transition: border-color 0.2s;
-      flex-shrink: 0;
-      position: relative; z-index: 201; /* above toast */
-    }
-    .nav-hamburger:hover { border-color: var(--accent); }
-    .nav-hamburger span {
-      display: block; width: 18px; height: 1.5px;
-      background: var(--text);
-      transition: transform 0.3s, opacity 0.3s, width 0.3s;
-      transform-origin: center;
-    }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
 
-    /* ── OVERLAY (always in DOM, shown/hidden via opacity+pointer-events) ── */
-    .nav-overlay {
-      position: fixed; inset: 0; z-index: 190;
-      background: rgba(0,0,0,0.35);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
+    /* ══ RESPONSIVE ════════════════════════════════════ */
+    @media (max-width: 860px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.75rem; }
+      .nav-controls .lang-switcher button,
+      .nav-controls .theme-toggle button { padding: 0.28rem 0.4rem; }
     }
-    .nav-overlay.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* ── TOAST MENU (always in DOM, animated via transform+opacity) ──────── */
-    .nav-toast {
-      position: fixed;
-      bottom: 1.4rem; left: 50%;
-      transform: translateX(-50%) translateY(calc(100% + 2rem));
-      z-index: 200;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 0.5rem;
-      box-shadow: 0 12px 60px rgba(0,0,0,0.3), 0 0 0 1px var(--border);
-      min-width: 230px;
-      opacity: 0;
-      pointer-events: none;
-      transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1),
-                  opacity   0.28s ease;
-      /* no display:none — transitions need element always rendered */
-    }
-    .nav-toast.open {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .nav-toast ul {
-      list-style: none;
-      display: flex; flex-direction: column; gap: 0.1rem;
-    }
-    .nav-toast ul li a {
-      display: flex; align-items: center; gap: 0.8rem;
-      padding: 0.85rem 1.3rem;
-      border-radius: 12px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700; font-size: 1rem;
-      letter-spacing: 0.03em; text-transform: uppercase;
-      text-decoration: none; color: var(--text);
-      transition: background 0.15s, color 0.15s;
-    }
-    .nav-toast ul li a:hover,
-    .nav-toast ul li a:active {
-      background: var(--accent-glow);
-      color: var(--accent);
-    }
-    .nav-toast ul li a .t-icon {
-      font-size: 0.95rem; width: 20px; text-align: center;
-      color: var(--accent);
-    }
-    .nav-toast-divider {
-      height: 1px; background: var(--border); margin: 0.25rem 1rem;
-    }
-
-    /* ── RESPONSIVE ────────────────────────────────────── */
     @media (max-width: 700px) {
       .nav-links     { display: none; }
+      .nav-controls  { display: none; }
       .nav-hamburger { display: flex; }
-      /* toast & overlay: always rendered, toggled via .open class — no display change needed */
       .vibe-inner    { grid-template-columns: 1fr; gap: 2rem; }
       .contact-box   { flex-direction: column; }
       section        { padding: 3.5rem 0; }
       .vibe-section  { padding: 3.5rem 0; }
     }
-
     @media (max-width: 480px) {
-      .hero          { padding: 3rem 1.2rem 2.5rem; min-height: calc(100svh - 58px); }
+      .hero          { padding: 3rem 1.2rem 2.5rem; min-height: calc(100svh - 52px); }
       .hero h1       { font-size: clamp(2.2rem, 11vw, 3rem); }
       .hero-sub      { font-size: 0.82rem; }
       .logo-svg      { width: 90px; height: 90px; }
       .models-grid   { grid-template-columns: repeat(2, 1fr); }
       .build-grid    { grid-template-columns: 1fr; }
-      .tags-wrap     { gap: 0.45rem; }
       .contact-box   { padding: 1.6rem; }
       .section-title { font-size: clamp(1.4rem, 6vw, 2rem); }
       .wrapper       { padding: 0 1rem; }
     }
-
-    /* ── STAGGER REVEAL ────────────────────────────────── */
-    .reveal {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .reveal.visible { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
-
   <div class="grid-bg"></div>
 
-  <!-- NAV -->
+  <!-- ════ MAIN NAV ════════════════════════════════════════ -->
   <nav class="main-nav">
     <div class="nav-inner">
       <a class="nav-brand" href="#">
         <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <polygon points="20,2 38,11 38,29 20,38 2,29 2,11" fill="none" stroke="currentColor" stroke-width="1.5"/>
           <circle cx="20" cy="20" r="4" fill="var(--accent)"/>
-          <line x1="20" y1="2" x2="20" y2="16" stroke="var(--accent)" stroke-width="1.2" opacity="0.6"/>
-          <line x1="20" y1="24" x2="20" y2="38" stroke="var(--accent)" stroke-width="1.2" opacity="0.6"/>
-          <line x1="2" y1="11" x2="16.5" y2="17" stroke="var(--accent)" stroke-width="1.2" opacity="0.6"/>
+          <line x1="20" y1="2"  x2="20"   y2="16" stroke="var(--accent)" stroke-width="1.2" opacity="0.6"/>
+          <line x1="20" y1="24" x2="20"   y2="38" stroke="var(--accent)" stroke-width="1.2" opacity="0.6"/>
+          <line x1="2"  y1="11" x2="16.5" y2="17" stroke="var(--accent)" stroke-width="1.2" opacity="0.6"/>
           <line x1="23.5" y1="23" x2="38" y2="29" stroke="var(--accent)" stroke-width="1.2" opacity="0.6"/>
           <line x1="38" y1="11" x2="23.5" y2="17" stroke="var(--accent)" stroke-width="1.2" opacity="0.6"/>
-          <line x1="16.5" y1="23" x2="2" y2="29" stroke="var(--accent)" stroke-width="1.2" opacity="0.6"/>
+          <line x1="16.5" y1="23" x2="2"  y2="29" stroke="var(--accent)" stroke-width="1.2" opacity="0.6"/>
         </svg>
         IT AI Coder<span class="dot">.</span>
       </a>
+
       <ul class="nav-links">
-        <li><a href="#models">Models</a></li>
-        <li><a href="#build">Projects</a></li>
-        <li><a href="#stack">Stack</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#models"  data-i18n="nav.models">Models</a></li>
+        <li><a href="#build"   data-i18n="nav.projects">Projects</a></li>
+        <li><a href="#stack"   data-i18n="nav.stack">Stack</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
       </ul>
+
+      <div class="nav-controls">
+        <div class="lang-switcher">
+          <button data-lang="en" class="active">EN</button>
+          <button data-lang="it">IT</button>
+          <button data-lang="de">DE</button>
+        </div>
+        <div class="theme-toggle">
+          <button data-theme-val="light"  title="Light">&#9728;&#65039;</button>
+          <button data-theme-val="system" title="System" class="active">&#9881;&#65039;</button>
+          <button data-theme-val="dark"   title="Dark">&#127769;</button>
+        </div>
+      </div>
+
       <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
-  <!-- TOAST MENU (mobile) -->
-  <div class="nav-overlay" id="nav-overlay"></div>
-  <nav class="nav-toast" id="nav-toast" role="dialog" aria-label="Navigation menu">
-    <ul>
-      <li><a href="#models"  class="toast-link"><span class="t-icon">◆</span> Models</a></li>
-      <li><a href="#build"   class="toast-link"><span class="t-icon">▲</span> Projects</a></li>
-      <div class="nav-toast-divider"></div>
-      <li><a href="#stack"   class="toast-link"><span class="t-icon">⬡</span> Stack</a></li>
-      <li><a href="#contact" class="toast-link"><span class="t-icon">❖</span> Contact</a></li>
-    </ul>
-  </nav>
+  <!-- ════ OVERLAY ═════════════════════════════════════════ -->
+  <div class="nav-overlay" id="navOverlay"></div>
 
-  <!-- HERO -->
+  <!-- ════ TOAST MENU ══════════════════════════════════════ -->
+  <div class="nav-toast" id="navToast">
+    <ul class="toast-links">
+      <li><a href="#models"  class="toast-link"><span class="t-icon">&#9670;</span><span data-i18n="nav.models">Models</span></a></li>
+      <li><a href="#build"   class="toast-link"><span class="t-icon">&#9650;</span><span data-i18n="nav.projects">Projects</span></a></li>
+      <li><a href="#stack"   class="toast-link"><span class="t-icon">&#11041;</span><span data-i18n="nav.stack">Stack</span></a></li>
+      <li><a href="#contact" class="toast-link"><span class="t-icon">&#10022;</span><span data-i18n="nav.contact">Contact</span></a></li>
+    </ul>
+    <div class="toast-sep"></div>
+    <div class="toast-controls">
+      <div class="lang-switcher">
+        <button data-lang="en" class="active">EN</button>
+        <button data-lang="it">IT</button>
+        <button data-lang="de">DE</button>
+      </div>
+      <div class="theme-toggle">
+        <button data-theme-val="light"  title="Light">&#9728;&#65039;</button>
+        <button data-theme-val="system" title="System" class="active">&#9881;&#65039;</button>
+        <button data-theme-val="dark"   title="Dark">&#127769;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ HERO ════════════════════════════════════════════ -->
   <section class="hero">
     <div class="logo-ring">
       <div class="logo-wrap">
-        <!-- AI Logo SVG -->
         <svg class="logo-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.15"/>
+              <stop offset="0%"   stop-color="var(--accent)" stop-opacity="0.15"/>
               <stop offset="100%" stop-color="transparent"/>
             </radialGradient>
             <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="var(--accent)"/>
+              <stop offset="0%"   stop-color="var(--accent)"/>
               <stop offset="100%" stop-color="var(--accent2)"/>
             </linearGradient>
           </defs>
-          <!-- Glow -->
           <circle cx="60" cy="60" r="55" fill="url(#glow)"/>
-          <!-- Outer hex -->
-          <polygon points="60,8 104,33 104,83 60,108 16,83 16,33"
-            fill="none" stroke="url(#hexGrad)" stroke-width="2" opacity="0.6"/>
-          <!-- Inner hex -->
-          <polygon points="60,22 92,40 92,76 60,94 28,76 28,40"
-            fill="none" stroke="var(--accent)" stroke-width="1.2" opacity="0.35"/>
-          <!-- Neural nodes -->
-          <circle cx="60" cy="8"  r="3.5" fill="var(--accent)" opacity="0.9"/>
-          <circle cx="104" cy="33" r="3.5" fill="var(--accent)" opacity="0.9"/>
-          <circle cx="104" cy="83" r="3.5" fill="var(--accent)" opacity="0.9"/>
-          <circle cx="60" cy="108" r="3.5" fill="var(--accent)" opacity="0.9"/>
-          <circle cx="16" cy="83" r="3.5" fill="var(--accent)" opacity="0.9"/>
-          <circle cx="16" cy="33" r="3.5" fill="var(--accent)" opacity="0.9"/>
-          <!-- Center -->
-          <circle cx="60" cy="60" r="10" fill="var(--surface)" stroke="url(#hexGrad)" stroke-width="2"/>
-          <circle cx="60" cy="60" r="4" fill="url(#hexGrad)"/>
-          <!-- AI text -->
-          <text x="60" y="64" text-anchor="middle"
-            font-family="'Syne', sans-serif" font-weight="800" font-size="7"
-            fill="var(--accent)" letter-spacing="1">AI</text>
-          <!-- Connector lines -->
-          <line x1="60" y1="8"   x2="60"  y2="50" stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
-          <line x1="104" y1="33" x2="69"  y2="55" stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
-          <line x1="104" y1="83" x2="69"  y2="65" stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
-          <line x1="60" y1="108" x2="60"  y2="70" stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
-          <line x1="16" y1="83"  x2="51"  y2="65" stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
-          <line x1="16" y1="33"  x2="51"  y2="55" stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
-          <!-- Orbit ring -->
-          <circle cx="60" cy="60" r="30" fill="none" stroke="var(--accent)" stroke-width="0.6"
-            stroke-dasharray="4 6" opacity="0.25"/>
+          <polygon points="60,8 104,33 104,83 60,108 16,83 16,33" fill="none" stroke="url(#hexGrad)" stroke-width="2" opacity="0.6"/>
+          <polygon points="60,22 92,40 92,76 60,94 28,76 28,40" fill="none" stroke="var(--accent)" stroke-width="1.2" opacity="0.35"/>
+          <circle cx="60"  cy="8"   r="3.5" fill="var(--accent)" opacity="0.9"/>
+          <circle cx="104" cy="33"  r="3.5" fill="var(--accent)" opacity="0.9"/>
+          <circle cx="104" cy="83"  r="3.5" fill="var(--accent)" opacity="0.9"/>
+          <circle cx="60"  cy="108" r="3.5" fill="var(--accent)" opacity="0.9"/>
+          <circle cx="16"  cy="83"  r="3.5" fill="var(--accent)" opacity="0.9"/>
+          <circle cx="16"  cy="33"  r="3.5" fill="var(--accent)" opacity="0.9"/>
+          <circle cx="60"  cy="60"  r="10"  fill="var(--surface)" stroke="url(#hexGrad)" stroke-width="2"/>
+          <circle cx="60"  cy="60"  r="4"   fill="url(#hexGrad)"/>
+          <text x="60" y="64" text-anchor="middle" font-family="'Syne',sans-serif" font-weight="800" font-size="7" fill="var(--accent)" letter-spacing="1">AI</text>
+          <line x1="60"  y1="8"   x2="60" y2="50"  stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
+          <line x1="104" y1="33"  x2="69" y2="55"  stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
+          <line x1="104" y1="83"  x2="69" y2="65"  stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
+          <line x1="60"  y1="108" x2="60" y2="70"  stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
+          <line x1="16"  y1="83"  x2="51" y2="65"  stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
+          <line x1="16"  y1="33"  x2="51" y2="55"  stroke="var(--accent)" stroke-width="0.8" opacity="0.3"/>
+          <circle cx="60" cy="60" r="30" fill="none" stroke="var(--accent)" stroke-width="0.6" stroke-dasharray="4 6" opacity="0.25"/>
         </svg>
       </div>
     </div>
-
-    <p class="eyebrow">// vibe coding with AI</p>
-    <h1>
-      <span class="accent">IT</span> AI<br/>
-      <span class="accent2">Coder</span>
-    </h1>
-    <p class="hero-sub">
-      Building applications through vibe coding —<br/>
-      collaborating with multiple AI models to turn ideas into working software.
-    </p>
+    <p class="eyebrow" data-i18n="hero.eyebrow">// vibe coding with AI</p>
+    <h1><span class="ac1">IT</span> AI<br/><span class="ac2">Coder</span></h1>
+    <p class="hero-sub" data-i18n="hero.sub">Building applications through vibe coding —<br/>collaborating with multiple AI models to turn ideas into working software.</p>
     <div class="hero-cta">
-      <a href="#build" class="btn btn-primary">Explore Projects</a>
-      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      <a href="#build"   class="btn btn-primary" data-i18n="hero.cta1">Explore Projects</a>
+      <a href="#contact" class="btn btn-ghost"   data-i18n="hero.cta2">Get in touch</a>
     </div>
     <div class="scroll-cue">
       <div class="scroll-line"></div>
-      scroll
+      <span data-i18n="hero.scroll">scroll</span>
     </div>
   </section>
 
-  <!-- MODELS -->
+  <!-- ════ MODELS ══════════════════════════════════════════ -->
   <section id="models">
     <div class="wrapper">
       <div class="reveal">
-        <p class="section-label">// 01 — AI Arsenal</p>
-        <h2 class="section-title">Models I work with</h2>
-        <p class="section-desc">Every project benefits from a different AI perspective. I pick the right model for each layer of the build.</p>
+        <p class="section-label" data-i18n="models.label">// 01 — AI Arsenal</p>
+        <h2 class="section-title" data-i18n="models.title">Models I work with</h2>
+        <p class="section-desc"   data-i18n="models.desc">Every project benefits from a different AI perspective. I pick the right model for each layer of the build.</p>
       </div>
       <div class="models-grid">
-        <div class="model-card reveal">
-          <div class="model-icon">◆</div>
-          <div class="model-name">Claude</div>
-          <div class="model-tag">Anthropic</div>
-          <div class="model-desc">Architecture design, code reasoning & complex problem solving.</div>
-        </div>
-        <div class="model-card reveal">
-          <div class="model-icon">✦</div>
-          <div class="model-name">GPT-4o</div>
-          <div class="model-tag">OpenAI</div>
-          <div class="model-desc">Multimodal tasks, rapid prototyping and natural language interfaces.</div>
-        </div>
-        <div class="model-card reveal">
-          <div class="model-icon">▲</div>
-          <div class="model-name">Gemini</div>
-          <div class="model-tag">Google</div>
-          <div class="model-desc">Large context windows, document analysis and cross-platform integration.</div>
-        </div>
-        <div class="model-card reveal">
-          <div class="model-icon">⬡</div>
-          <div class="model-name">Mistral</div>
-          <div class="model-tag">Open Source</div>
-          <div class="model-desc">Lightweight on-device inference and privacy-first workflows.</div>
-        </div>
-        <div class="model-card reveal">
-          <div class="model-icon">◉</div>
-          <div class="model-name">Llama 3</div>
-          <div class="model-tag">Meta</div>
-          <div class="model-desc">Self-hosted deployments, custom fine-tuning and edge computing.</div>
-        </div>
-        <div class="model-card reveal">
-          <div class="model-icon">❖</div>
-          <div class="model-name">Copilot</div>
-          <div class="model-tag">GitHub</div>
-          <div class="model-desc">IDE-native completions, PR reviews and CI/CD automation.</div>
-        </div>
+        <div class="model-card reveal"><div class="model-icon">&#9670;</div><div class="model-name">Claude</div><div class="model-tag">Anthropic</div><div class="model-desc" data-i18n="models.claude">Architecture design, code reasoning &amp; complex problem solving.</div></div>
+        <div class="model-card reveal"><div class="model-icon">&#10022;</div><div class="model-name">GPT-4o</div><div class="model-tag">OpenAI</div><div class="model-desc" data-i18n="models.gpt">Multimodal tasks, rapid prototyping and natural language interfaces.</div></div>
+        <div class="model-card reveal"><div class="model-icon">&#9650;</div><div class="model-name">Gemini</div><div class="model-tag">Google</div><div class="model-desc" data-i18n="models.gemini">Large context windows, document analysis and cross-platform integration.</div></div>
+        <div class="model-card reveal"><div class="model-icon">&#11041;</div><div class="model-name">Mistral</div><div class="model-tag">Open Source</div><div class="model-desc" data-i18n="models.mistral">Lightweight on-device inference and privacy-first workflows.</div></div>
+        <div class="model-card reveal"><div class="model-icon">&#9689;</div><div class="model-name">Llama 3</div><div class="model-tag">Meta</div><div class="model-desc" data-i18n="models.llama">Self-hosted deployments, custom fine-tuning and edge computing.</div></div>
+        <div class="model-card reveal"><div class="model-icon">&#10023;</div><div class="model-name">Copilot</div><div class="model-tag">GitHub</div><div class="model-desc" data-i18n="models.copilot">IDE-native completions, PR reviews and CI/CD automation.</div></div>
       </div>
     </div>
   </section>
 
   <div class="wrapper"><div class="divider"></div></div>
 
-  <!-- WHAT I BUILD -->
+  <!-- ════ BUILD ═══════════════════════════════════════════ -->
   <section id="build">
     <div class="wrapper">
       <div class="reveal">
-        <p class="section-label">// 02 — What I build</p>
-        <h2 class="section-title">Projects & Applications</h2>
-        <p class="section-desc">From Android apps to automation pipelines — shaped entirely through vibe coding sessions.</p>
+        <p class="section-label" data-i18n="build.label">// 02 — What I build</p>
+        <h2 class="section-title" data-i18n="build.title">Projects &amp; Applications</h2>
+        <p class="section-desc"   data-i18n="build.desc">From Android apps to automation pipelines — shaped entirely through vibe coding sessions.</p>
       </div>
       <div class="build-grid">
-        <div class="build-item reveal">
-          <p class="build-number">01 —</p>
-          <h3 class="build-title">Android Applications</h3>
-          <p class="build-desc">Native Kotlin apps with Jetpack Compose, Material3, and Hilt DI — built iteratively with AI pair programming.</p>
-        </div>
-        <div class="build-item reveal">
-          <p class="build-number">02 —</p>
-          <h3 class="build-title">IoT & Energy Monitoring</h3>
-          <p class="build-desc">Solar plant dashboards and smart home monitoring tools integrating real-time data streams.</p>
-        </div>
-        <div class="build-item reveal">
-          <p class="build-number">03 —</p>
-          <h3 class="build-title">CI/CD Pipelines</h3>
-          <p class="build-desc">GitHub Actions workflows for automated Android builds, APK signing and release distribution.</p>
-        </div>
-        <div class="build-item reveal">
-          <p class="build-number">04 —</p>
-          <h3 class="build-title">Browser Extensions</h3>
-          <p class="build-desc">Chrome extensions for data extraction and visualization, migrated to mobile with dual-WebView architecture.</p>
-        </div>
-        <div class="build-item reveal">
-          <p class="build-number">05 —</p>
-          <h3 class="build-title">Process Automation</h3>
-          <p class="build-desc">BPMN workflow digitization, SMO/PMO tooling and team process documentation systems.</p>
-        </div>
-        <div class="build-item reveal">
-          <p class="build-number">06 —</p>
-          <h3 class="build-title">Web Interfaces</h3>
-          <p class="build-desc">Responsive single-page applications and dashboards crafted with semantic HTML, CSS and vanilla JS.</p>
-        </div>
+        <div class="build-item reveal"><p class="build-number">01 —</p><h3 class="build-title" data-i18n="build.b1t">Android Applications</h3><p class="build-desc" data-i18n="build.b1d">Native Kotlin apps with Jetpack Compose, Material3, and Hilt DI — built iteratively with AI pair programming.</p></div>
+        <div class="build-item reveal"><p class="build-number">02 —</p><h3 class="build-title" data-i18n="build.b2t">IoT &amp; Energy Monitoring</h3><p class="build-desc" data-i18n="build.b2d">Solar plant dashboards and smart home monitoring tools integrating real-time data streams.</p></div>
+        <div class="build-item reveal"><p class="build-number">03 —</p><h3 class="build-title" data-i18n="build.b3t">CI/CD Pipelines</h3><p class="build-desc" data-i18n="build.b3d">GitHub Actions workflows for automated Android builds, APK signing and release distribution.</p></div>
+        <div class="build-item reveal"><p class="build-number">04 —</p><h3 class="build-title" data-i18n="build.b4t">Browser Extensions</h3><p class="build-desc" data-i18n="build.b4d">Chrome extensions for data extraction and visualization, migrated to mobile with dual-WebView architecture.</p></div>
+        <div class="build-item reveal"><p class="build-number">05 —</p><h3 class="build-title" data-i18n="build.b5t">Process Automation</h3><p class="build-desc" data-i18n="build.b5d">BPMN workflow digitization, SMO/PMO tooling and team process documentation systems.</p></div>
+        <div class="build-item reveal"><p class="build-number">06 —</p><h3 class="build-title" data-i18n="build.b6t">Web Interfaces</h3><p class="build-desc" data-i18n="build.b6d">Responsive single-page applications and dashboards crafted with semantic HTML, CSS and vanilla JS.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- VIBE CODING -->
+  <!-- ════ VIBE ═════════════════════════════════════════════ -->
   <div class="vibe-section">
     <div class="wrapper">
       <div class="vibe-inner">
         <div class="reveal">
-          <p class="section-label">// 03 — The Method</p>
-          <h2 class="section-title">What is vibe coding?</h2>
-          <p class="section-desc">
-            Vibe coding means staying in the creative flow — describing intent to an AI model and iterating on the output rather than wrestling with boilerplate. The developer steers; the AI codes. The result ships faster.
-          </p>
-          <p class="section-desc" style="margin-top:1rem;">
-            Each session is a dialogue: a rough idea becomes a working prototype in minutes, then gets refined across multiple models until it's production-ready.
-          </p>
+          <p class="section-label" data-i18n="vibe.label">// 03 — The Method</p>
+          <h2 class="section-title" data-i18n="vibe.title">What is vibe coding?</h2>
+          <p class="section-desc" data-i18n="vibe.p1">Vibe coding means staying in the creative flow — describing intent to an AI model and iterating on the output rather than wrestling with boilerplate. The developer steers; the AI codes. The result ships faster.</p>
+          <p class="section-desc" style="margin-top:1rem" data-i18n="vibe.p2">Each session is a dialogue: a rough idea becomes a working prototype in minutes, then gets refined across multiple models until it's production-ready.</p>
         </div>
         <div class="vibe-terminal reveal">
-          <div class="term-bar">
-            <div class="term-dot r"></div>
-            <div class="term-dot y"></div>
-            <div class="term-dot g"></div>
-          </div>
+          <div class="term-bar"><div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div></div>
           <div class="term-body">
-            <div class="term-line">
-              <span class="term-prompt">$</span>
-              <span class="term-cmd">vibe-session --model claude</span>
-            </div>
-            <div class="term-out">✓ context loaded</div>
-            <div class="term-out">✓ architecture reviewed</div>
-            <div class="term-out">→ <span class="term-highlight">generating Kotlin module...</span></div>
+            <div class="term-line"><span class="term-prompt">$</span><span class="term-cmd">vibe-session --model claude</span></div>
+            <div class="term-out">&#10003; context loaded</div>
+            <div class="term-out">&#10003; architecture reviewed</div>
+            <div class="term-out">&#8594; <span class="term-hi">generating Kotlin module...</span></div>
             <br/>
-            <div class="term-line">
-              <span class="term-prompt">$</span>
-              <span class="term-cmd">git push &amp;&amp; gh actions run</span>
-            </div>
-            <div class="term-out">✓ build passed (2m 14s)</div>
-            <div class="term-out">✓ APK signed &amp; released</div>
+            <div class="term-line"><span class="term-prompt">$</span><span class="term-cmd">git push &amp;&amp; gh actions run</span></div>
+            <div class="term-out">&#10003; build passed (2m 14s)</div>
+            <div class="term-out">&#10003; APK signed &amp; released</div>
             <br/>
-            <div class="term-line">
-              <span class="term-prompt">$</span>
-              <span class="term-cmd">next-idea <span class="cursor"></span></span>
-            </div>
+            <div class="term-line"><span class="term-prompt">$</span><span class="term-cmd">next-idea <span class="cursor"></span></span></div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- STACK -->
+  <!-- ════ STACK ════════════════════════════════════════════ -->
   <section id="stack">
     <div class="wrapper">
       <div class="reveal">
-        <p class="section-label">// 04 — Tech Stack</p>
-        <h2 class="section-title">Tools & Technologies</h2>
-        <p class="section-desc">The full toolkit — from language models to deployment targets.</p>
+        <p class="section-label" data-i18n="stack.label">// 04 — Tech Stack</p>
+        <h2 class="section-title" data-i18n="stack.title">Tools &amp; Technologies</h2>
+        <p class="section-desc"   data-i18n="stack.desc">The full toolkit — from language models to deployment targets.</p>
       </div>
       <div class="tags-wrap reveal">
-        <span class="tag">Kotlin</span>
-        <span class="tag">Jetpack Compose</span>
-        <span class="tag">Material3</span>
-        <span class="tag">Hilt / DI</span>
-        <span class="tag">Android</span>
-        <span class="tag">GitHub Actions</span>
-        <span class="tag">Gradle 8</span>
-        <span class="tag">JDK 17</span>
-        <span class="tag">HTML / CSS / JS</span>
-        <span class="tag">BPMN</span>
-        <span class="tag">Git</span>
-        <span class="tag">Chrome Extensions</span>
-        <span class="tag">REST APIs</span>
-        <span class="tag">WebView</span>
-        <span class="tag">GitHub Codespaces</span>
-        <span class="tag">GitHub Pages</span>
-        <span class="tag">Node.js</span>
-        <span class="tag">Python</span>
-        <span class="tag">Bash</span>
-        <span class="tag">CI/CD</span>
+        <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Material3</span>
+        <span class="tag">Hilt / DI</span><span class="tag">Android</span><span class="tag">GitHub Actions</span>
+        <span class="tag">Gradle 8</span><span class="tag">JDK 17</span><span class="tag">HTML / CSS / JS</span>
+        <span class="tag">BPMN</span><span class="tag">Git</span><span class="tag">Chrome Extensions</span>
+        <span class="tag">REST APIs</span><span class="tag">WebView</span><span class="tag">GitHub Codespaces</span>
+        <span class="tag">GitHub Pages</span><span class="tag">Node.js</span><span class="tag">Python</span>
+        <span class="tag">Bash</span><span class="tag">CI/CD</span>
       </div>
     </div>
   </section>
 
   <div class="wrapper"><div class="divider"></div></div>
 
-  <!-- CONTACT -->
+  <!-- ════ CONTACT ═════════════════════════════════════════ -->
   <section id="contact">
     <div class="wrapper">
       <div class="reveal">
-        <p class="section-label">// 05 — Contact</p>
-        <h2 class="section-title">Let's build something</h2>
-        <p class="section-desc">Have an idea? Let's turn it into a product — one vibe session at a time.</p>
+        <p class="section-label" data-i18n="contact.label">// 05 — Contact</p>
+        <h2 class="section-title" data-i18n="contact.title">Let's build something</h2>
+        <p class="section-desc"   data-i18n="contact.desc">Have an idea? Let's turn it into a product — one vibe session at a time.</p>
       </div>
       <div class="contact-box reveal">
         <div>
-          <h3>Open to collaborations</h3>
-          <p>Projects, experiments, and AI-powered builds.</p>
+          <h3 data-i18n="contact.h3">Open to collaborations</h3>
+          <p  data-i18n="contact.p">Projects, experiments, and AI-powered builds.</p>
         </div>
-        <a href="https://github.com/evalentinel" class="btn btn-primary" target="_blank" rel="noopener">
-          GitHub →
-        </a>
+        <a href="https://github.com/evalentinel" class="btn btn-primary" target="_blank" rel="noopener">GitHub &#8594;</a>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- ════ FOOTER ══════════════════════════════════════════ -->
   <footer>
-    <p>© 2025 <span>IT AI Coder</span> — built with vibe coding &amp; multiple AI models</p>
+    <p data-i18n="footer">&#169; 2025 <span>IT AI Coder</span> &#8212; built with vibe coding &amp; multiple AI models</p>
   </footer>
 
-  <!-- Scroll reveal + Mobile toast menu -->
   <script>
-    // ── Scroll reveal ──────────────────────────────────────
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const delay = e.target.dataset.delay || 0;
-          setTimeout(() => e.target.classList.add('visible'), delay);
-        }
-      });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.reveal').forEach((el, i) => {
-      el.dataset.delay = (i % 4) * 80;
-      observer.observe(el);
-    });
-
-    // ── Toast menu ─────────────────────────────────────────
-    const hamburger = document.getElementById('hamburger');
-    const toast     = document.getElementById('nav-toast');
-    const overlay   = document.getElementById('nav-overlay');
-
-    function openMenu() {
-      hamburger.classList.add('open');
-      toast.classList.add('open');
-      overlay.classList.add('open');
-      hamburger.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
+  /* ═══════════════════════════════════════════════════════
+     TRANSLATIONS
+  ═══════════════════════════════════════════════════════ */
+  const translations = {
+    en: {
+      'nav.models':'Models','nav.projects':'Projects','nav.stack':'Stack','nav.contact':'Contact',
+      'hero.eyebrow':'// vibe coding with AI',
+      'hero.sub':'Building applications through vibe coding —\ncollaborating with multiple AI models to turn ideas into working software.',
+      'hero.cta1':'Explore Projects','hero.cta2':'Get in touch','hero.scroll':'scroll',
+      'models.label':'// 01 — AI Arsenal','models.title':'Models I work with',
+      'models.desc':'Every project benefits from a different AI perspective. I pick the right model for each layer of the build.',
+      'models.claude':'Architecture design, code reasoning & complex problem solving.',
+      'models.gpt':'Multimodal tasks, rapid prototyping and natural language interfaces.',
+      'models.gemini':'Large context windows, document analysis and cross-platform integration.',
+      'models.mistral':'Lightweight on-device inference and privacy-first workflows.',
+      'models.llama':'Self-hosted deployments, custom fine-tuning and edge computing.',
+      'models.copilot':'IDE-native completions, PR reviews and CI/CD automation.',
+      'build.label':'// 02 — What I build','build.title':'Projects & Applications',
+      'build.desc':'From Android apps to automation pipelines — shaped entirely through vibe coding sessions.',
+      'build.b1t':'Android Applications','build.b1d':'Native Kotlin apps with Jetpack Compose, Material3, and Hilt DI — built iteratively with AI pair programming.',
+      'build.b2t':'IoT & Energy Monitoring','build.b2d':'Solar plant dashboards and smart home monitoring tools integrating real-time data streams.',
+      'build.b3t':'CI/CD Pipelines','build.b3d':'GitHub Actions workflows for automated Android builds, APK signing and release distribution.',
+      'build.b4t':'Browser Extensions','build.b4d':'Chrome extensions for data extraction and visualization, migrated to mobile with dual-WebView architecture.',
+      'build.b5t':'Process Automation','build.b5d':'BPMN workflow digitization, SMO/PMO tooling and team process documentation systems.',
+      'build.b6t':'Web Interfaces','build.b6d':'Responsive single-page applications and dashboards crafted with semantic HTML, CSS and vanilla JS.',
+      'vibe.label':'// 03 — The Method','vibe.title':'What is vibe coding?',
+      'vibe.p1':'Vibe coding means staying in the creative flow — describing intent to an AI model and iterating on the output rather than wrestling with boilerplate. The developer steers; the AI codes. The result ships faster.',
+      'vibe.p2':"Each session is a dialogue: a rough idea becomes a working prototype in minutes, then gets refined across multiple models until it's production-ready.",
+      'stack.label':'// 04 — Tech Stack','stack.title':'Tools & Technologies','stack.desc':'The full toolkit — from language models to deployment targets.',
+      'contact.label':'// 05 — Contact','contact.title':"Let's build something",'contact.desc':"Have an idea? Let's turn it into a product — one vibe session at a time.",
+      'contact.h3':'Open to collaborations','contact.p':'Projects, experiments, and AI-powered builds.',
+      'footer':'&copy; 2025 <span>IT AI Coder</span> &mdash; built with vibe coding &amp; multiple AI models',
+    },
+    it: {
+      'nav.models':'Modelli','nav.projects':'Progetti','nav.stack':'Stack','nav.contact':'Contatti',
+      'hero.eyebrow':"// vibe coding con l'AI",
+      'hero.sub':'Sviluppo applicazioni tramite vibe coding —\ncollaborando con diversi modelli di intelligenza artificiale per trasformare idee in software funzionante.',
+      'hero.cta1':'Esplora i Progetti','hero.cta2':'Contattami','hero.scroll':'scorri',
+      'models.label':'// 01 — Arsenale AI','models.title':'I modelli che utilizzo',
+      'models.desc':'Ogni progetto beneficia di una prospettiva AI diversa. Scelgo il modello giusto per ogni livello del progetto.',
+      'models.claude':'Progettazione architetturale, ragionamento sul codice e risoluzione di problemi complessi.',
+      'models.gpt':'Attività multimodali, prototipazione rapida e interfacce in linguaggio naturale.',
+      'models.gemini':'Finestre di contesto ampie, analisi documentale e integrazione cross-platform.',
+      'models.mistral':'Inferenza leggera su dispositivo e workflow privacy-first.',
+      'models.llama':'Deployment self-hosted, fine-tuning personalizzato e edge computing.',
+      'models.copilot':'Completamento nel IDE, revisione PR e automazione CI/CD.',
+      'build.label':'// 02 — Cosa sviluppo','build.title':'Progetti & Applicazioni',
+      'build.desc':'Dalle app Android ai pipeline di automazione — tutto costruito attraverso sessioni di vibe coding.',
+      'build.b1t':'Applicazioni Android','build.b1d':'App native Kotlin con Jetpack Compose, Material3 e Hilt DI — sviluppate iterativamente con AI pair programming.',
+      'build.b2t':'IoT & Monitoraggio Energetico','build.b2d':'Dashboard per impianti solari e strumenti di monitoraggio smart home con flussi dati in tempo reale.',
+      'build.b3t':'Pipeline CI/CD','build.b3d':'Workflow GitHub Actions per build Android automatizzate, firma APK e distribuzione delle release.',
+      'build.b4t':'Estensioni Browser','build.b4d':'Estensioni Chrome per estrazione e visualizzazione dati, migrate su mobile con architettura dual-WebView.',
+      'build.b5t':'Automazione dei Processi','build.b5d':'Digitalizzazione workflow BPMN, strumenti SMO/PMO e sistemi di documentazione dei processi team.',
+      'build.b6t':'Interfacce Web','build.b6d':'Applicazioni single-page responsive e dashboard realizzate con HTML semantico, CSS e JavaScript vanilla.',
+      'vibe.label':'// 03 — Il Metodo','vibe.title':'Cos\'è il vibe coding?',
+      'vibe.p1':"Il vibe coding significa restare nel flusso creativo — descrivere l'intenzione a un modello AI e iterare sull'output invece di combattere con il boilerplate. Lo sviluppatore guida; l'AI scrive il codice. Il risultato arriva prima.",
+      'vibe.p2':"Ogni sessione è un dialogo: un'idea grezza diventa un prototipo funzionante in pochi minuti, poi viene raffinata su più modelli fino a essere pronta per la produzione.",
+      'stack.label':'// 04 — Tech Stack','stack.title':'Strumenti & Tecnologie','stack.desc':'Il toolkit completo — dai modelli linguistici ai target di deployment.',
+      'contact.label':'// 05 — Contatti','contact.title':'Costruiamo qualcosa',"contact.desc":"Hai un'idea? Trasformiamola in un prodotto — una sessione di vibe alla volta.",
+      'contact.h3':'Aperto a collaborazioni','contact.p':'Progetti, esperimenti e build AI-powered.',
+      'footer':'&copy; 2025 <span>IT AI Coder</span> &mdash; sviluppato con vibe coding &amp; modelli AI',
+    },
+    de: {
+      'nav.models':'Modelle','nav.projects':'Projekte','nav.stack':'Stack','nav.contact':'Kontakt',
+      'hero.eyebrow':'// Vibe Coding mit KI',
+      'hero.sub':'Anwendungen durch Vibe Coding entwickeln —\nin Zusammenarbeit mit mehreren KI-Modellen, um Ideen in funktionierende Software zu verwandeln.',
+      'hero.cta1':'Projekte entdecken','hero.cta2':'Kontakt aufnehmen','hero.scroll':'scrollen',
+      'models.label':'// 01 — KI-Arsenal','models.title':'Modelle, mit denen ich arbeite',
+      'models.desc':'Jedes Projekt profitiert von einer anderen KI-Perspektive. Ich wähle das passende Modell für jede Ebene des Builds.',
+      'models.claude':'Architekturdesign, Code-Analyse und komplexe Problemlösung.',
+      'models.gpt':'Multimodale Aufgaben, schnelles Prototyping und natürlichsprachliche Schnittstellen.',
+      'models.gemini':'Große Kontextfenster, Dokumentenanalyse und plattformübergreifende Integration.',
+      'models.mistral':'Leichtgewichtige On-Device-Inferenz und datenschutzorientierte Workflows.',
+      'models.llama':'Self-Hosted-Deployments, Custom Fine-Tuning und Edge Computing.',
+      'models.copilot':'IDE-native Vervollständigungen, PR-Reviews und CI/CD-Automatisierung.',
+      'build.label':'// 02 — Was ich entwickle','build.title':'Projekte & Anwendungen',
+      'build.desc':'Von Android-Apps bis zu Automatisierungspipelines — alles durch Vibe Coding gestaltet.',
+      'build.b1t':'Android-Anwendungen','build.b1d':'Native Kotlin-Apps mit Jetpack Compose, Material3 und Hilt DI — iterativ mit KI-Pair-Programming entwickelt.',
+      'build.b2t':'IoT & Energiemonitoring','build.b2d':'Dashboards für Solaranlagen und Smart-Home-Monitoring-Tools mit Echtzeit-Datenströmen.',
+      'build.b3t':'CI/CD-Pipelines','build.b3d':'GitHub-Actions-Workflows für automatisierte Android-Builds, APK-Signierung und Release-Verteilung.',
+      'build.b4t':'Browser-Erweiterungen','build.b4d':'Chrome-Extensions zur Datenextraktion und -visualisierung, auf Mobile portiert mit Dual-WebView-Architektur.',
+      'build.b5t':'Prozessautomatisierung','build.b5d':'BPMN-Workflow-Digitalisierung, SMO/PMO-Tooling und Prozessdokumentationssysteme für Teams.',
+      'build.b6t':'Web-Interfaces','build.b6d':'Responsive Single-Page-Anwendungen und Dashboards mit semantischem HTML, CSS und Vanilla JS.',
+      'vibe.label':'// 03 — Die Methode','vibe.title':'Was ist Vibe Coding?',
+      'vibe.p1':'Vibe Coding bedeutet, im kreativen Fluss zu bleiben — dem KI-Modell die Absicht zu beschreiben und das Ergebnis zu iterieren, anstatt mit Boilerplate zu kämpfen. Der Entwickler steuert; die KI programmiert. Das Ergebnis kommt schneller.',
+      'vibe.p2':'Jede Session ist ein Dialog: Eine grobe Idee wird in wenigen Minuten zum funktionierenden Prototyp, der dann über mehrere Modelle verfeinert wird, bis er produktionsreif ist.',
+      'stack.label':'// 04 — Tech Stack','stack.title':'Werkzeuge & Technologien','stack.desc':'Das vollständige Toolkit — von Sprachmodellen bis zu Deployment-Zielen.',
+      'contact.label':'// 05 — Kontakt','contact.title':'Lass uns etwas bauen','contact.desc':'Hast du eine Idee? Lass sie uns in ein Produkt verwandeln — eine Vibe-Session nach der anderen.',
+      'contact.h3':'Offen für Zusammenarbeit','contact.p':'Projekte, Experimente und KI-gestützte Builds.',
+      'footer':'&copy; 2025 <span>IT AI Coder</span> &mdash; entwickelt mit Vibe Coding &amp; KI-Modellen',
     }
+  };
 
-    function closeMenu() {
-      hamburger.classList.remove('open');
-      toast.classList.remove('open');
-      overlay.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    }
+  /* ═══════════════════════════════════════════════════════
+     THEME
+  ═══════════════════════════════════════════════════════ */
+  const THEME_KEY = 'itai-theme';
+  let currentThemePref = localStorage.getItem(THEME_KEY) || 'system';
 
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.contains('open') ? closeMenu() : openMenu();
+  function applyTheme(pref) {
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const dark = pref === 'dark' || (pref === 'system' && systemDark);
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    document.querySelectorAll('[data-theme-val]').forEach(b =>
+      b.classList.toggle('active', b.dataset.themeVal === pref));
+  }
+
+  function setTheme(pref) {
+    currentThemePref = pref;
+    localStorage.setItem(THEME_KEY, pref);
+    applyTheme(pref);
+  }
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (currentThemePref === 'system') applyTheme('system');
+  });
+
+  document.querySelectorAll('[data-theme-val]').forEach(btn =>
+    btn.addEventListener('click', () => setTheme(btn.dataset.themeVal)));
+
+  applyTheme(currentThemePref);
+
+  /* ═══════════════════════════════════════════════════════
+     I18N
+  ═══════════════════════════════════════════════════════ */
+  const LANG_KEY = 'itai-lang';
+
+  function detectLang() {
+    const bl = (navigator.language || 'en').slice(0, 2).toLowerCase();
+    return ['en','it','de'].includes(bl) ? bl : 'en';
+  }
+
+  let currentLang = localStorage.getItem(LANG_KEY) || detectLang();
+
+  function applyLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    const t = translations[lang] || translations.en;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const val = t[el.dataset.i18n] ?? translations.en[el.dataset.i18n] ?? '';
+      el.innerHTML = val.replace(/\n/g, '<br/>');
     });
+    document.querySelectorAll('[data-lang]').forEach(b =>
+      b.classList.toggle('active', b.dataset.lang === lang));
+    localStorage.setItem(LANG_KEY, lang);
+  }
 
-    overlay.addEventListener('click', closeMenu);
+  document.querySelectorAll('[data-lang]').forEach(btn =>
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang)));
 
-    // Close on link click + smooth scroll
-    document.querySelectorAll('.toast-link').forEach(link => {
-      link.addEventListener('click', () => closeMenu());
+  applyLang(currentLang);
+
+  /* ═══════════════════════════════════════════════════════
+     HAMBURGER TOAST
+  ═══════════════════════════════════════════════════════ */
+  const hamburger  = document.getElementById('hamburger');
+  const navToast   = document.getElementById('navToast');
+  const navOverlay = document.getElementById('navOverlay');
+
+  function openMenu() {
+    hamburger.classList.add('open');
+    navToast.classList.add('open');
+    navOverlay.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    hamburger.classList.remove('open');
+    navToast.classList.remove('open');
+    navOverlay.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', () =>
+    hamburger.classList.contains('open') ? closeMenu() : openMenu());
+  navOverlay.addEventListener('click', closeMenu);
+  document.querySelectorAll('.toast-link').forEach(l => l.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+  /* ═══════════════════════════════════════════════════════
+     SCROLL REVEAL
+  ═══════════════════════════════════════════════════════ */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting)
+        setTimeout(() => e.target.classList.add('visible'), e.target.dataset.delay || 0);
     });
+  }, { threshold: 0.12 });
 
-    // Close on Escape
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeMenu();
-    });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.dataset.delay = (i % 4) * 80;
+    obs.observe(el);
+  });
   </script>
 </body>
 </html>
