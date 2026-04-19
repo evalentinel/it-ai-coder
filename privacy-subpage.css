@@ -1,0 +1,94 @@
+:root {
+  --bg: #f4f0e8;
+  --bg2: #eae5d8;
+  --surface: #ffffff;
+  --border: #d0c9b8;
+  --text: #0d1b2a;
+  --text-muted: #5a6475;
+  --accent: #00bcd4;
+  --accent-glow: rgba(0, 188, 212, 0.22);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Syne", sans-serif;
+  background: radial-gradient(circle at top right, var(--bg2), var(--bg));
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.25;
+}
+
+.wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.policy-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 16px 40px rgba(13, 27, 42, 0.08);
+  padding: 2rem clamp(1rem, 3vw, 2rem);
+}
+
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  letter-spacing: -0.02em;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.75rem;
+}
+
+.updated {
+  margin: 0 0 1.25rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-family: "JetBrains Mono", monospace;
+}
+
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.7;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+}
