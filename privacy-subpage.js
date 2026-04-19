@@ -1,14 +1,19 @@
 (function () {
-  function escapeHtml(value) {
-    return value
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+  function appendTextWithBreaks(fragment, text) {
+    var parts = text.split("\n");
+    parts.forEach(function (part, index) {
+      if (part) {
+        fragment.appendChild(document.createTextNode(part));
+      }
+      if (index < parts.length - 1) {
+        fragment.appendChild(document.createElement("br"));
+      }
+    });
   }
 
-  function linkifyText(text) {
+  function buildLinkifiedFragment(text) {
     var pattern = /(https?:\/\/[^\s]+|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi;
-    var html = "";
+    var fragment = document.createDocumentFragment();
     var lastIndex = 0;
     var match;
 
@@ -20,17 +25,22 @@
       var trailing = raw.slice(clean.length);
       var isMail = clean.indexOf("@") > -1 && clean.indexOf("http") !== 0;
 
-      html += escapeHtml(text.slice(lastIndex, start));
-      html += '<a href="' + (isMail ? "mailto:" + clean : clean) + '">' + escapeHtml(clean) + "</a>";
-      html += escapeHtml(trailing);
+      appendTextWithBreaks(fragment, text.slice(lastIndex, start));
+
+      var link = document.createElement("a");
+      link.href = isMail ? "mailto:" + clean : clean;
+      link.textContent = clean;
+      fragment.appendChild(link);
+
+      appendTextWithBreaks(fragment, trailing);
       lastIndex = end;
     }
 
-    html += escapeHtml(text.slice(lastIndex));
-    return html.replace(/\n/g, "<br>");
+    appendTextWithBreaks(fragment, text.slice(lastIndex));
+    return fragment;
   }
 
   document.querySelectorAll("pre").forEach(function (pre) {
-    pre.innerHTML = linkifyText(pre.textContent);
+    pre.replaceChildren(buildLinkifiedFragment(pre.textContent));
   });
 })();
