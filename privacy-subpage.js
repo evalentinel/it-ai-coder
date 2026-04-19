@@ -28,9 +28,28 @@
       appendTextWithBreaks(fragment, text.slice(lastIndex, start));
 
       var link = document.createElement("a");
-      link.href = isMail ? "mailto:" + clean : clean;
-      link.textContent = clean;
-      fragment.appendChild(link);
+      if (isMail) {
+        if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(clean)) {
+          link.href = "mailto:" + clean;
+          link.textContent = clean;
+          fragment.appendChild(link);
+        } else {
+          fragment.appendChild(document.createTextNode(clean));
+        }
+      } else {
+        try {
+          var parsedUrl = new URL(clean);
+          if (parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:") {
+            link.href = parsedUrl.toString();
+            link.textContent = clean;
+            fragment.appendChild(link);
+          } else {
+            fragment.appendChild(document.createTextNode(clean));
+          }
+        } catch (error) {
+          fragment.appendChild(document.createTextNode(clean));
+        }
+      }
 
       appendTextWithBreaks(fragment, trailing);
       lastIndex = end;
