@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy – FTV Solar Forecast</title>
+  <style>
+    body { font-family: Georgia, serif; max-width: 800px; margin: 40px auto; padding: 0 24px; color: #1a1a1a; line-height: 1.8; }
+    h1 { font-size: 1.6em; border-bottom: 2px solid #eee; padding-bottom: 12px; }
+    .updated { color: #666; font-size: 0.9em; margin-bottom: 32px; }
+    pre { white-space: pre-wrap; font-family: inherit; font-size: 1em; }
+  </style>
+</head>
+<body>
+  <h1>Privacy Policy – FTV Solar Forecast</h1>
+  <p class="updated">Ultimo aggiornamento: 22 aprile 2026</p>
+  <pre>Last updated: 22 aprile 2026
+
+PRIVACY POLICY
+FTV Solar Forecast
+Package: com.itaicoder.ftvsolarforecast.app
+
+
+1. DATA CONTROLLER
+
+The data controller is:
+IT AI Coder
+Website: https://evalentinel.github.io/it-ai-coder/
+Email: it.aicoder@gmail.com
+
+For any questions regarding the processing of your personal data or the exercise of your rights, you may contact the data controller at the email address provided above.
+
+
+2. INTRODUCTION
+
+This Privacy Policy describes how the FTV Solar Forecast application (hereinafter "the App") collects, uses, and protects user information. IT AI Coder is committed to complying with applicable data protection legislation, in particular the General Data Protection Regulation (GDPR, EU Regulation 2016/679).
+
+FTV Solar Forecast is an Android application designed to provide photovoltaic solar production forecasts, weather data, and electricity price information. The App is developed with a strong focus on user privacy: no personal data is transmitted to servers owned by the developer, and all information generated through the use of the App is stored exclusively on the user's device.
+
+
+3. DATA COLLECTED AND METHODS OF COLLECTION
+
+3.1 Location Data
+
+The App requests and uses the following location data:
+
+Precise GPS location (ACCESS_FINE_LOCATION): requested in order to accurately determine the geographic coordinates of the user's photovoltaic installation or location of interest, so as to accurately calculate solar irradiance, energy production forecasts, and local weather conditions.
+
+Approximate location (ACCESS_COARSE_LOCATION): used as an alternative or in combination with precise location, when less detailed positioning is sufficient for the requested functionality.
+
+Location data is never transmitted to the developer's servers. It is used solely to formulate requests to the third-party external services described in Section 5 of this policy, and for calculations performed locally on the device. Location data may be saved locally in the App's database (see Section 3.3) for the sole purpose of preventing the user from having to manually re-enter their preferences each time the application is launched.
+
+3.2 Access to Files and External Storage
+
+The App may request permission to access the device's external storage (read and/or write) to allow the user to export data, save reports, or load configurations. Such access occurs only upon the user's explicit request, and any files generated remain on the user's device.
+
+3.3 Locally Stored Data
+
+The App uses a local database (Room Database, based on SQLite) installed on the user's device to store:
+
+- User preferences and configurations (e.g., saved geographic coordinates, photovoltaic system parameters, preferred units of measurement).
+- Weather and forecast data downloaded from third-party services, cached to allow quick access and reduce data consumption.
+- Historical production or price data optionally saved by the user.
+
+This data is stored exclusively on the user's device and is never transmitted to the developer's servers or to third parties, except as necessary for requests to the external services described in Section 5.
+
+3.4 Background Processes
+
+The App may run background processes to periodically update weather forecasts or solar production data, in order to provide up-to-date information even when the App is not running in the foreground. These processes use locally stored location data and communicate exclusively with the third-party services described in Section 5.
+
+3.5 Data Not Collected
+
+IT AI Coder expressly states that the App does NOT collect, does NOT transmit, and does NOT process:
+
+- Personal identifying data (first name, last name, email address, phone number, etc.).
+- Navigation or in-app behavioral data (analytics).
+- Crash reports or error logs transmitted to external servers.
+- Biometric data or sensitive data of any kind.
+- IP addresses or advertising identifiers.
+
+
+4. PURPOSES OF PROCESSING AND LEGAL BASIS
+
+4.1 Calculation of Solar Production Forecasts
+
+Purpose: to use the user's geographic coordinates to obtain solar irradiance data, weather forecasts, and calculate the expected output of the photovoltaic system.
+Legal basis: performance of a contract or pre-contractual measures at the user's request (Art. 6(1)(b) GDPR), and the legitimate interest of the controller in providing the core features of the App (Art. 6(1)(f) GDPR).
+
+4.2 Display of Energy Prices
+
+Purpose: to provide the user with up-to-date information on Italian electricity market prices via public data from the Gestore dei Mercati Energetici (GME).
+Legal basis: legitimate interest of the controller in providing public information features (Art. 6(1)(f) GDPR).
+
+4.3 Geocoding and Maps
+
+Purpose: to convert an address or place name into geographic coordinates (and vice versa) to facilitate location selection by the user.
+Legal basis: user consent expressed through the use of the address-search functionality (Art. 6(1)(a) GDPR), and the legitimate interest of the controller (Art. 6(1)(f) GDPR).
+
+4.4 Storage of User Preferences
+
+Purpose: to locally store user settings in order to improve the user experience and avoid the need to reconfigure the App each time it is launched.
+Legal basis: legitimate interest of the controller in providing a smooth and functional user experience (Art. 6(1)(f) GDPR).
+
+
+5. EXTERNAL THIRD-PARTY SERVICES
+
+The App connects to the following third-party services to obtain data necessary for its operation. In these cases, the user's location data (geographic coordinates) is transmitted as parameters of HTTP requests to these services. IT AI Coder has no control over data that may be collected by these services and encourages users to review their respective privacy policies.
+
+5.1 Open-Meteo
+Description: open-source and free weather forecast service that does not require an API key.
+Data transmitted: geographic coordinates (latitude and longitude) as request parameters.
+Purpose: to obtain local weather forecasts (temperature, solar radiation, cloud cover, etc.).
+Open-Meteo privacy policy: https://open-meteo.com/en/terms
+
+5.2 PVGIS / JRC (Joint Research Centre of the European Commission)
+Description: European Commission service for the calculation of solar irradiance and estimation of photovoltaic system output.
+Data transmitted: geographic coordinates and technical parameters of the photovoltaic system (not attributable to a natural person).
+Purpose: to calculate historical and estimated solar irradiance at the user's location.
+JRC/PVGIS privacy policy: https://joint-research-centre.ec.europa.eu/legal-notice_en
+
+5.3 GME - Gestore dei Mercati Energetici
+Description: Italian public body managing the electricity market. Energy price data is public and accessible via a public API.
+Data transmitted: no personal data. The request does not include geographic coordinates or any other user data.
+Purpose: to obtain up-to-date electricity prices on the Italian market (PUN and zonal prices).
+GME website: https://www.mercatoelettrico.org
+
+5.4 OpenStreetMap / Nominatim
+Description: open-source map and geocoding service managed by the OpenStreetMap Foundation.
+Data transmitted: search text entered by the user (e.g., name of a city or an address) or geographic coordinates for reverse geocoding.
+Purpose: to convert addresses into coordinates and display geographic maps.
+Nominatim/OpenStreetMap privacy policy: https://osmfoundation.org/wiki/Privacy_Policy
+
+
+6. DATA RETENTION
+
+All data generated through use of the App is stored exclusively on the user's device, in the local Room DB database. There is no backend or remote server managed by IT AI Coder that stores data relating to App usage.
+
+Local data is retained for as long as the App remains installed on the user's device. The user may delete all data at any time through the deletion functions available within the App, or by uninstalling the App, which will automatically delete all local data.
+
+Data potentially transmitted to third-party services (geographic coordinates) is subject to the retention policies of the respective providers, over which IT AI Coder has no control.
+
+
+7. USER RIGHTS UNDER THE GDPR
+
+As a user residing in the European Union, you have the following rights under the GDPR with regard to the protection of your personal data:
+
+Right of access (Art. 15 GDPR): you have the right to obtain confirmation of whether personal data concerning you is being processed and to access that data.
+
+Right to rectification (Art. 16 GDPR): you have the right to obtain the rectification of inaccurate or incomplete personal data concerning you.
+
+Right to erasure ("right to be forgotten", Art. 17 GDPR): you have the right to obtain the deletion of your personal data. Since the App stores data only locally, you may exercise this right directly by deleting data within the App or by uninstalling it.
+
+Right to restriction of processing (Art. 18 GDPR): you have the right to obtain restriction of the processing of your data under certain circumstances.
+
+Right to data portability (Art. 20 GDPR): you have the right to receive your data in a structured, commonly used, and machine-readable format.
+
+Right to object (Art. 21 GDPR): you have the right to object to the processing of your data based on the legitimate interest of the controller.
+
+Right to lodge a complaint with a supervisory authority (Art. 77 GDPR): you have the right to lodge a complaint with the competent supervisory authority. In Italy, the competent authority is the Garante per la protezione dei dati personali (www.garanteprivacy.it). Users in other EU member states may contact their national supervisory authority.
+
+To exercise your rights, you may contact IT AI Coder at: it.aicoder@gmail.com
+
+
+8. DATA SECURITY
+
+IT AI Coder implements appropriate technical measures to protect data stored locally on the user's device. However, since the data resides on the user's device, security also depends on the protective measures adopted by the user themselves (e.g., screen lock, device encryption).
+
+IT AI Coder is not responsible for unauthorized access to local data resulting from compromise of the user's device.
+
+
+9. MINORS
+
+The App is not intended for users under the age of 13. IT AI Coder does not knowingly collect personal data from minors. If you believe that a minor has provided personal data through the App, please contact us at it.aicoder@gmail.com.
+
+
+10. CHANGES TO THIS PRIVACY POLICY
+
+IT AI Coder reserves the right to update this Privacy Policy at any time, particularly following changes to the App, the introduction of new services, or changes in applicable legislation. Updates will be published on the developer's website and/or made available within the App. In the event of material changes, users will be informed in an appropriate manner.
+
+Continued use of the App after the publication of changes constitutes acceptance of the updated Privacy Policy.
+
+
+11. CONTACT
+
+For any questions, requests, or complaints regarding this Privacy Policy or the processing of your personal data, you may contact IT AI Coder at:
+
+Developer: IT AI Coder
+Website: https://evalentinel.github.io/it-ai-coder/
+Email: it.aicoder@gmail.com</pre>
+</body>
+</html>
