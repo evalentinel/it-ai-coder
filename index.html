@@ -146,6 +146,7 @@
       background: none; border: 1px solid var(--border);
       border-radius: 6px; cursor: pointer; padding: 0;
       transition: border-color 0.2s; flex-shrink: 0;
+      position: relative; z-index: 201;
     }
     .nav-hamburger:hover { border-color: var(--accent); }
     .nav-hamburger span {
@@ -156,31 +157,42 @@
     .nav-hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-    /* ══ OVERLAY ════════════════════════════════════════ */
+    /* ══ OVERLAY — transparent, just catches outside clicks ═ */
     .nav-overlay {
       position: fixed; inset: 0; z-index: 190;
-      background: rgba(0,0,0,0.38);
-      backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+      background: transparent;
       opacity: 0; pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.15s ease;
     }
     .nav-overlay.open { opacity: 1; pointer-events: auto; }
 
-    /* ══ TOAST MENU — never display:none ════════════════ */
+    /* ══ DROPDOWN MENU — never display:none ════════════════ */
     .nav-toast {
       position: fixed;
-      top: 58px; right: 1.5rem;
-      transform: translateY(-8px) scale(0.97);
+      top: 56px; right: 1.2rem;
+      transform: translateY(-6px) scale(0.96);
       transform-origin: top right;
       z-index: 200;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 0.5rem 0.4rem 0.6rem;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.22);
-      min-width: 230px;
+      border-radius: 12px;
+      padding: 0.4rem 0.4rem 0.5rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.10);
+      min-width: 200px;
       opacity: 0; pointer-events: none;
-      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), opacity 0.2s ease;
+      transition: transform 0.22s cubic-bezier(0.16,1,0.3,1), opacity 0.18s ease;
+    }
+    /* caret arrow pointing up toward hamburger */
+    .nav-toast::before {
+      content: '';
+      position: absolute;
+      top: -7px; right: 10px;
+      width: 12px; height: 12px;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      transform: rotate(45deg);
+      border-radius: 2px 0 0 0;
     }
     .nav-toast.open {
       transform: translateY(0) scale(1);
@@ -417,9 +429,7 @@
       </a>
 
       <ul class="nav-links">
-        <li><a href="#models"  data-i18n="nav.models">Models</a></li>
         <li><a href="#build"   data-i18n="nav.projects">Projects</a></li>
-        <li><a href="#stack"   data-i18n="nav.stack">Stack</a></li>
         <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
       </ul>
 
@@ -448,9 +458,7 @@
   <!-- ════ TOAST MENU ══════════════════════════════════════ -->
   <div class="nav-toast" id="navToast">
     <ul class="toast-links">
-      <li><a href="#models"  class="toast-link"><span class="t-icon">&#9670;</span><span data-i18n="nav.models">Models</span></a></li>
       <li><a href="#build"   class="toast-link"><span class="t-icon">&#9650;</span><span data-i18n="nav.projects">Projects</span></a></li>
-      <li><a href="#stack"   class="toast-link"><span class="t-icon">&#11041;</span><span data-i18n="nav.stack">Stack</span></a></li>
       <li><a href="#contact" class="toast-link"><span class="t-icon">&#10022;</span><span data-i18n="nav.contact">Contact</span></a></li>
     </ul>
     <div class="toast-sep"></div>
@@ -518,26 +526,6 @@
     </div>
   </section>
 
-  <!-- ════ MODELS ══════════════════════════════════════════ -->
-  <section id="models">
-    <div class="wrapper">
-      <div class="reveal">
-        <p class="section-label" data-i18n="models.label">// 01 — AI Arsenal</p>
-        <h2 class="section-title" data-i18n="models.title">Models I work with</h2>
-        <p class="section-desc"   data-i18n="models.desc">Every project benefits from a different AI perspective. I pick the right model for each layer of the build.</p>
-      </div>
-      <div class="models-grid">
-        <div class="model-card reveal"><div class="model-icon">&#9670;</div><div class="model-name">Claude</div><div class="model-tag">Anthropic</div><div class="model-desc" data-i18n="models.claude">Architecture design, code reasoning &amp; complex problem solving.</div></div>
-        <div class="model-card reveal"><div class="model-icon">&#10022;</div><div class="model-name">GPT-4o</div><div class="model-tag">OpenAI</div><div class="model-desc" data-i18n="models.gpt">Multimodal tasks, rapid prototyping and natural language interfaces.</div></div>
-        <div class="model-card reveal"><div class="model-icon">&#9650;</div><div class="model-name">Gemini</div><div class="model-tag">Google</div><div class="model-desc" data-i18n="models.gemini">Large context windows, document analysis and cross-platform integration.</div></div>
-        <div class="model-card reveal"><div class="model-icon">&#11041;</div><div class="model-name">Mistral</div><div class="model-tag">Open Source</div><div class="model-desc" data-i18n="models.mistral">Lightweight on-device inference and privacy-first workflows.</div></div>
-        <div class="model-card reveal"><div class="model-icon">&#9689;</div><div class="model-name">Llama 3</div><div class="model-tag">Meta</div><div class="model-desc" data-i18n="models.llama">Self-hosted deployments, custom fine-tuning and edge computing.</div></div>
-        <div class="model-card reveal"><div class="model-icon">&#10023;</div><div class="model-name">Copilot</div><div class="model-tag">GitHub</div><div class="model-desc" data-i18n="models.copilot">IDE-native completions, PR reviews and CI/CD automation.</div></div>
-      </div>
-    </div>
-  </section>
-
-  <div class="wrapper"><div class="divider"></div></div>
 
   <!-- ════ BUILD ═══════════════════════════════════════════ -->
   <section id="build">
@@ -587,25 +575,6 @@
     </div>
   </div>
 
-  <!-- ════ STACK ════════════════════════════════════════════ -->
-  <section id="stack">
-    <div class="wrapper">
-      <div class="reveal">
-        <p class="section-label" data-i18n="stack.label">// 04 — Tech Stack</p>
-        <h2 class="section-title" data-i18n="stack.title">Tools &amp; Technologies</h2>
-        <p class="section-desc"   data-i18n="stack.desc">The full toolkit — from language models to deployment targets.</p>
-      </div>
-      <div class="tags-wrap reveal">
-        <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Material3</span>
-        <span class="tag">Hilt / DI</span><span class="tag">Android</span><span class="tag">GitHub Actions</span>
-        <span class="tag">Gradle 8</span><span class="tag">JDK 17</span><span class="tag">HTML / CSS / JS</span>
-        <span class="tag">BPMN</span><span class="tag">Git</span><span class="tag">Chrome Extensions</span>
-        <span class="tag">REST APIs</span><span class="tag">WebView</span><span class="tag">GitHub Codespaces</span>
-        <span class="tag">GitHub Pages</span><span class="tag">Node.js</span><span class="tag">Python</span>
-        <span class="tag">Bash</span><span class="tag">CI/CD</span>
-      </div>
-    </div>
-  </section>
 
   <div class="wrapper"><div class="divider"></div></div>
 
@@ -643,13 +612,6 @@
       'hero.sub':'Building applications through vibe coding —\ncollaborating with multiple AI models to turn ideas into working software.',
       'hero.cta1':'Explore Projects','hero.cta2':'Get in touch','hero.scroll':'scroll',
       'models.label':'// 01 — AI Arsenal','models.title':'Models I work with',
-      'models.desc':'Every project benefits from a different AI perspective. I pick the right model for each layer of the build.',
-      'models.claude':'Architecture design, code reasoning & complex problem solving.',
-      'models.gpt':'Multimodal tasks, rapid prototyping and natural language interfaces.',
-      'models.gemini':'Large context windows, document analysis and cross-platform integration.',
-      'models.mistral':'Lightweight on-device inference and privacy-first workflows.',
-      'models.llama':'Self-hosted deployments, custom fine-tuning and edge computing.',
-      'models.copilot':'IDE-native completions, PR reviews and CI/CD automation.',
       'build.label':'// 02 — What I build','build.title':'Projects & Applications',
       'build.desc':'From Android apps to automation pipelines — shaped entirely through vibe coding sessions.',
       'build.b1t':'Android Applications','build.b1d':'Native Kotlin apps with Jetpack Compose, Material3, and Hilt DI — built iteratively with AI pair programming.',
@@ -672,13 +634,6 @@
       'hero.sub':'Sviluppo applicazioni tramite vibe coding —\ncollaborando con diversi modelli di intelligenza artificiale per trasformare idee in software funzionante.',
       'hero.cta1':'Esplora i Progetti','hero.cta2':'Contattami','hero.scroll':'scorri',
       'models.label':'// 01 — Arsenale AI','models.title':'I modelli che utilizzo',
-      'models.desc':'Ogni progetto beneficia di una prospettiva AI diversa. Scelgo il modello giusto per ogni livello del progetto.',
-      'models.claude':'Progettazione architetturale, ragionamento sul codice e risoluzione di problemi complessi.',
-      'models.gpt':'Attività multimodali, prototipazione rapida e interfacce in linguaggio naturale.',
-      'models.gemini':'Finestre di contesto ampie, analisi documentale e integrazione cross-platform.',
-      'models.mistral':'Inferenza leggera su dispositivo e workflow privacy-first.',
-      'models.llama':'Deployment self-hosted, fine-tuning personalizzato e edge computing.',
-      'models.copilot':'Completamento nel IDE, revisione PR e automazione CI/CD.',
       'build.label':'// 02 — Cosa sviluppo','build.title':'Progetti & Applicazioni',
       'build.desc':'Dalle app Android ai pipeline di automazione — tutto costruito attraverso sessioni di vibe coding.',
       'build.b1t':'Applicazioni Android','build.b1d':'App native Kotlin con Jetpack Compose, Material3 e Hilt DI — sviluppate iterativamente con AI pair programming.',
@@ -701,13 +656,6 @@
       'hero.sub':'Anwendungen durch Vibe Coding entwickeln —\nin Zusammenarbeit mit mehreren KI-Modellen, um Ideen in funktionierende Software zu verwandeln.',
       'hero.cta1':'Projekte entdecken','hero.cta2':'Kontakt aufnehmen','hero.scroll':'scrollen',
       'models.label':'// 01 — KI-Arsenal','models.title':'Modelle, mit denen ich arbeite',
-      'models.desc':'Jedes Projekt profitiert von einer anderen KI-Perspektive. Ich wähle das passende Modell für jede Ebene des Builds.',
-      'models.claude':'Architekturdesign, Code-Analyse und komplexe Problemlösung.',
-      'models.gpt':'Multimodale Aufgaben, schnelles Prototyping und natürlichsprachliche Schnittstellen.',
-      'models.gemini':'Große Kontextfenster, Dokumentenanalyse und plattformübergreifende Integration.',
-      'models.mistral':'Leichtgewichtige On-Device-Inferenz und datenschutzorientierte Workflows.',
-      'models.llama':'Self-Hosted-Deployments, Custom Fine-Tuning und Edge Computing.',
-      'models.copilot':'IDE-native Vervollständigungen, PR-Reviews und CI/CD-Automatisierung.',
       'build.label':'// 02 — Was ich entwickle','build.title':'Projekte & Anwendungen',
       'build.desc':'Von Android-Apps bis zu Automatisierungspipelines — alles durch Vibe Coding gestaltet.',
       'build.b1t':'Android-Anwendungen','build.b1d':'Native Kotlin-Apps mit Jetpack Compose, Material3 und Hilt DI — iterativ mit KI-Pair-Programming entwickelt.',
